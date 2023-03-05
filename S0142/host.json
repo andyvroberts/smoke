@@ -1,0 +1,12 @@
+{
+    "functions": [ "S0142-R1-Scanner" ],
+    "version": "2.0",
+    "logging": {
+        "applicationInsights": {
+            "samplingSettings": {
+                "isEnabled": true,
+                "excludedTypes": "Request"
+            }
+        }
+    }
+}
