@@ -6,30 +6,56 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Azure.Data.Tables;
+using Azure.Storage.Blobs;
 using Newtonsoft.Json;
 
 namespace S0142
 {
+    using S0142.Common;
+    using S0142.Models;
+    using S0142.Services;
+
     public static class ScannerR1
     {
         [FunctionName("S0142-R1-Scanner")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,
-            ILogger log)
+        public static async Task Scan([TimerTrigger("*/3 * * * *", RunOnStartup = true)] TimerInfo scanTimer,
+        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFinalReconRK, Connection = "EnergyDataStorage")] ConfigTable cd,
+        [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
+        [Blob("bsc/saa")] BlobContainerClient lakeContainer,
+        ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            log.LogInformation("C# Timer trigger function processed a request.");
+            var nextDate = cd.Latest.AddDays(1);
 
-            string name = req.Query["name"];
+            if (nextDate.Date < DateTime.Now.Date)
+            {
+                string urlDate = $"{nextDate.Year}-{nextDate.Month:00}-{nextDate.Day:00}";
+                string apiKey = Environment.GetEnvironmentVariable("BmrsApiKey");
+                string localFolder = Environment.GetEnvironmentVariable("LocalDownloadFolder");
+                log.LogInformation($"Run Date = {urlDate}");
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+                var fileEntities = await ListFiles.FilesForRunDate(apiKey, urlDate);
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+                if (fileEntities.Any())
+                {
+                    foreach (var fileEntity in fileEntities)
+                    {
+                        if (fileEntity.RowKey == Constants.FinalReconciliation)
+                        {
+                            await ListFiles.DownloadFileAsync(apiKey, localFolder, fileEntity.FileName, log);
+                            await filesTab.UpsertEntityAsync(fileEntity);
+                        }
+                    }
+                }
+                else
+                {
+                    log.LogWarning($"Empty file list for date {urlDate}.");
+                }
+            }
 
-            return new OkObjectResult(responseMessage);
+            cd.Latest = nextDate;
+            log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
         }
     }
 }
