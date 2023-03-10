@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using Newtonsoft.Json;
+using System.Linq;
+
 
 namespace S0142
 {

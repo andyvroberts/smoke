@@ -1,18 +1,27 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace S0142.Common
 {
     internal static class Enums
     {
         public enum SettlementsRuns{
-            InterimInitial = II,
-            FinalInitial = FI,
-            FirstReconciliation = R1,
-            SecondReconciliation = R2,
-            ThirdReconciliation = R3,
-            FinalReconciliation = RF,
-            Dispute = DR,
-            FinalDispute = DF
+            [EnumMember(Value= "II")]
+            InterimInitial,
+            [EnumMember(Value= "FI")]
+            FinalInitial,
+            [EnumMember(Value= "R1")]
+            FirstReconciliation,
+            [EnumMember(Value= "R2")]
+            SecondReconciliation,
+            [EnumMember(Value= "R3")]
+            ThirdReconciliation,
+            [EnumMember(Value= "RF")]
+            FinalReconciliation,
+            [EnumMember(Value= "DR")]
+            Dispute,
+            [EnumMember(Value= "DF")]
+            FinalDispute
         }
     }
 }

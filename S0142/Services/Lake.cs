@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Azure.Storage.Blobs;
+using S0142.Common;
 
 namespace S0142.Services
 {
@@ -21,10 +23,15 @@ namespace S0142.Services
         /// <param name="fileName">the download file name</param>
         /// <param name="log">used to log warnings if file URL is not found</param>
         /// <returns></returns>
-        internal static async Task DownloadFileAsync(string apiKey, string folder, string fileName, ILogger log)
+        internal static async Task DownloadFileAsync(string apiKey, string settDate, string fileName,
+            BlobContainerClient lakeClient, ILogger log)
         {
             var uri = Constants.DownloadFile.Replace("<KEY>", apiKey);
             uri = uri.Replace("<FILE>", fileName);
+
+            // 20090823
+            var year = settDate.Substring(0,4);
+            var month = settDate.Substring(4,2);
 
             var basePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string downloadPath = Path.Combine(basePath, folder, fileName);
