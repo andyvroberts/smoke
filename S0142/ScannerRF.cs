@@ -12,11 +12,11 @@ namespace S0142
     using S0142.Models;
     using S0142.Services;
 
-    public static class ScannerR1
+    public static class ScannerRF
     {
-        [FunctionName("S0142-R1-Scanner")]
+        [FunctionName("S0142-RF-Scanner")]
         public static async Task Scan([TimerTrigger("*/3 * * * *", RunOnStartup = true)] TimerInfo scanTimer,
-        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFirstReconRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
+        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFinalReconRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
         {
@@ -34,7 +34,7 @@ namespace S0142
                 {
                     foreach (var fileEntity in fileEntities)
                     {
-                        if (fileEntity.RowKey == Constants.FirstReconciliation)
+                        if (fileEntity.RowKey == Constants.FinalReconciliation)
                         {
                             Pageable<FileListTable> qRes = filesTab.Query<FileListTable>(filter: $"PartitionKey eq '{fileEntity.PartitionKey}' and RowKey eq '{fileEntity.RowKey}'");
 
@@ -61,10 +61,14 @@ namespace S0142
                 {
                     log.LogWarning($"Empty file list for date {urlDate}.");
                 }
-            }
 
-            cd.Latest = nextDate;
-            log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
+                cd.Latest = nextDate;
+                log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
+            }
+            else
+            {
+                log.LogInformation($"No Execution - {nextDate} is greater than {DateTime.Now.Date}");
+            }
         }
     }
 }

@@ -50,5 +50,6 @@ Add the csproj references needed for Azure storage tables
 ```
 dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables --prerelease  
 dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
+dotnet add package Azure.Storage.Files.DataLake
 ```
 

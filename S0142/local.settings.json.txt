@@ -5,6 +5,7 @@
         "AzureWebJobsStorage": "storage connection string for the Function",
         "EnergyDataConfigStore": "storage connection string for azure tables",
         "EnergyDataLake": "data lake storage connection string",
-        "BmrsApiKey": "Your key"
+        "BmrsApiKey": "Your key",
+        "Container": "bsc"
     }
 }

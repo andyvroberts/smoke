@@ -1,5 +1,7 @@
 {
-    "functions": [ "S0142-R1-Scanner" ],
+    "functions": [
+        "S0142-RF-Scanner"
+    ],
     "version": "2.0",
     "logging": {
         "applicationInsights": {
