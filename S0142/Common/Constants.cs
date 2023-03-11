@@ -12,9 +12,11 @@ namespace S0142.Common
         // config rowkeys
         internal const string ConfigFinalReconRK = "S0142-RF";
         internal const string ConfigInterimInitRK = "S0142-II";
+        internal const string ConfigFirstReconRK = "S0142-R1";
 
         // SAA run types
         internal const string FinalReconciliation = "RF";
         internal const string InterimInitial = "II";
+        internal const string FirstReconciliation = "R1";
     }
 }

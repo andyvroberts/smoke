@@ -22,9 +22,8 @@ namespace S0142
     {
         [FunctionName("S0142-R1-Scanner")]
         public static async Task Scan([TimerTrigger("*/3 * * * *", RunOnStartup = true)] TimerInfo scanTimer,
-        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFinalReconRK, Connection = "EnergyDataStorage")] ConfigTable cd,
+        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFirstReconRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
-        [Blob("bsc/saa")] BlobContainerClient lakeContainer,
         ILogger log)
         {
             log.LogInformation("C# Timer trigger function processed a request.");
@@ -33,20 +32,24 @@ namespace S0142
             if (nextDate.Date < DateTime.Now.Date)
             {
                 string urlDate = $"{nextDate.Year}-{nextDate.Month:00}-{nextDate.Day:00}";
-                string apiKey = Environment.GetEnvironmentVariable("BmrsApiKey");
-                string localFolder = Environment.GetEnvironmentVariable("LocalDownloadFolder");
                 log.LogInformation($"Run Date = {urlDate}");
 
-                var fileEntities = await ListFiles.FilesForRunDate(apiKey, urlDate);
+                var fileEntities = await ListFiles.FilesForRunDate(Environment.GetEnvironmentVariable("BmrsApiKey"), urlDate);
 
                 if (fileEntities.Any())
                 {
                     foreach (var fileEntity in fileEntities)
                     {
-                        if (fileEntity.RowKey == Constants.FinalReconciliation)
+                        if (fileEntity.RowKey == Constants.FirstReconciliation)
                         {
-                            await ListFiles.DownloadFileAsync(apiKey, localFolder, fileEntity.FileName, log);
-                            await filesTab.UpsertEntityAsync(fileEntity);
+                            await Lake.AddToLake(
+                                Environment.GetEnvironmentVariable("BmrsApiKey"),
+                                Environment.GetEnvironmentVariable("EnergyDataLake"),
+                                fileEntity.PartitionKey,
+                                Environment.GetEnvironmentVariable("FileSystem"),
+                                fileEntity.FileName,
+                                log);
+                            //await filesTab.UpsertEntityAsync(fileEntity);
                         }
                     }
                 }
@@ -56,7 +59,7 @@ namespace S0142
                 }
             }
 
-            cd.Latest = nextDate;
+            //cd.Latest = nextDate;
             log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
         }
     }

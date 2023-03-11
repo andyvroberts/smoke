@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Extensions.Logging;
-using Azure.Storage.Blobs;
+using Azure.Storage.Files.DataLake;
 using S0142.Common;
 
 namespace S0142.Services
@@ -23,34 +23,55 @@ namespace S0142.Services
         /// <param name="fileName">the download file name</param>
         /// <param name="log">used to log warnings if file URL is not found</param>
         /// <returns></returns>
-        internal static async Task DownloadFileAsync(string apiKey, string settDate, string fileName,
-            BlobContainerClient lakeClient, ILogger log)
+        internal static async Task AddToLake(string apiKey, string lakeConnString, string settDate, string lakeContainer, string fileName,
+            ILogger log)
         {
             var uri = Constants.DownloadFile.Replace("<KEY>", apiKey);
             uri = uri.Replace("<FILE>", fileName);
 
             // 20090823
-            var year = settDate.Substring(0,4);
-            var month = settDate.Substring(4,2);
+            var year = settDate.Substring(0, 4);
+            var month = settDate.Substring(4, 2);
+            var lakeFileSystem = $"/{year}/{month}";
 
-            var basePath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            string downloadPath = Path.Combine(basePath, folder, fileName);
-
-            var downloadFile = await client.GetAsync(uri);
-
-            if (downloadFile != null)
+            // 
+            try
             {
-                using (var outStream = new FileStream(
-                    downloadPath, FileMode.Create, FileAccess.Write))
+                DataLakeServiceClient svcClient = new DataLakeServiceClient(lakeConnString);
+
+                DataLakeFileSystemClient fsClient = svcClient.GetFileSystemClient(lakeContainer);
+                log.LogInformation($"Lake Container = {fsClient.Uri}");
+
+                DataLakeDirectoryClient dirClient = fsClient.GetDirectoryClient(lakeFileSystem);
+                log.LogInformation($"Lake File System = {dirClient.Uri}");
+
+                await fsClient.CreateIfNotExistsAsync();
+
+                DataLakeFileClient fileclient = dirClient.GetFileClient(fileName);
+
+                var downloadFile = await client.GetAsync(uri);
+
+                if (downloadFile != null)
                 {
-                    await downloadFile.Content.CopyToAsync(outStream);
-                };
+                    // using (var outStream = new FileStream(
+                    //     downloadPath, FileMode.Create, FileAccess.Write))
+                    // {
+                    //     await downloadFile.Content.CopyToAsync(outStream);
+                    // };
 
-                log.LogInformation($"{fileName}");
+                    var outStream = await downloadFile.Content.ReadAsStreamAsync();
+                    await fileclient.UploadAsync(outStream);
+
+                    log.LogInformation($"{fileName}");
+                }
+                else
+                {
+                    log.LogWarning($"NO FILE: {fileName}");
+                }
             }
-            else
+            catch (Exception e)
             {
-                log.LogWarning($"NO FILE: {fileName}");
+                log.LogError($"DataLake Client ERROR - {e.Message}");
             }
         }
 
