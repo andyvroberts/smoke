@@ -34,7 +34,6 @@ namespace S0142.Services
             var month = settDate.Substring(4, 2);
             var lakeFileSystem = $"/saa/{year}/{month}";
 
-            // 
             try
             {
                 DataLakeServiceClient svcClient = new DataLakeServiceClient(lakeConnString);
@@ -44,7 +43,6 @@ namespace S0142.Services
                 DataLakeDirectoryClient dirClient = fsClient.GetDirectoryClient(lakeFileSystem);
 
                 //await fsClient.CreateIfNotExistsAsync();
-
                 DataLakeFileClient fileClient = dirClient.GetFileClient(fileName);
 
                 var downloadFile = await client.GetAsync(uri);

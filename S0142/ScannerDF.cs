@@ -67,7 +67,7 @@ namespace S0142
             }
             else
             {
-                log.LogInformation($"No Execution - {nextDate} is greater than {DateTime.Now.Date}");
+                log.LogInformation($"No Execution - run date [{nextDate}] is greater than or equal to today [{DateTime.Now.Date}]");
             }
         }
     }
