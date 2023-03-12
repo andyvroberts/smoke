@@ -61,10 +61,14 @@ namespace S0142
                 {
                     log.LogWarning($"Empty file list for date {urlDate}.");
                 }
-            }
 
-            cd.Latest = nextDate;
-            log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
+                cd.Latest = nextDate;
+                log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
+            }
+            else
+            {
+                log.LogInformation($"No Execution - run date [{nextDate}] is greater than or equal to today [{DateTime.Now.Date}]");
+            }
         }
     }
 }
