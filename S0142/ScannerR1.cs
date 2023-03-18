@@ -20,7 +20,6 @@ namespace S0142
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
         {
-            log.LogInformation("C# Timer trigger function processed a request.");
             var nextDate = cd.Latest.AddDays(1);
 
             if (nextDate.Date < DateTime.Now.Date)
@@ -63,11 +62,10 @@ namespace S0142
                 }
 
                 cd.Latest = nextDate;
-                log.LogInformation($"Updated Binding Date for completion of = {nextDate}");
             }
             else
             {
-                log.LogInformation($"No Execution - run date [{nextDate}] is greater than or equal to today [{DateTime.Now.Date}]");
+                log.LogWarning($"No Execution - run date [{nextDate}] is greater than or equal to today [{DateTime.Now.Date}]");
             }
         }
     }

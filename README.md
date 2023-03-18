@@ -74,3 +74,9 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
 dotnet add package Azure.Storage.Files.DataLake
 ```
 
+To restrict locally running functions during testing, add this clause to the "host.json" file to include only those functions you wish to execute:  
+```
+{
+    "functions": [ "funcname1", "funcname2" ]
+}
+```

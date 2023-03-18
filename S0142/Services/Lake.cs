@@ -18,11 +18,6 @@ namespace S0142.Services
         /// Construct the URL for the Elexon Portal and make the HTTP request.
         /// Create a file stream to download the gzip source object into the data lake
         /// </summary>
-        /// <param name="apiKey">the Elexon Portal api Key</param>
-        /// <param name="folder">the local disk folder which is the target of the file stream</param>
-        /// <param name="fileName">the download file name</param>
-        /// <param name="log">used to log warnings if file URL is not found</param>
-        /// <returns></returns>
         internal static async Task AddToLake(string apiKey, string lakeConnString, string settDate, string lakeContainer,
             string fileName, ILogger log)
         {
@@ -61,7 +56,7 @@ namespace S0142.Services
             }
             catch (Exception e)
             {
-                log.LogError($"DataLake Client ERROR - {e.Message}");
+                log.LogError($"DataLake Client for [File = {fileName}] - [SettDate = {settDate}] had ERROR: {e.Message}");
             }
         }
 
