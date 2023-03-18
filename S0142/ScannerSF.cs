@@ -12,11 +12,11 @@ namespace S0142
     using S0142.Models;
     using S0142.Services;
 
-    public static class ScannerR1
+    public static class ScannerSF
     {
-        [FunctionName("S0142-R1-Scanner")]
-        public static async Task Scan([TimerTrigger("20 1 * * *")] TimerInfo scanTimer,
-        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFirstReconRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
+        [FunctionName("S0142-SF-Scanner")]
+        public static async Task Scan([TimerTrigger("10 1 * * *")] TimerInfo scanTimer,
+        [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFinalInitialRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
         {
@@ -33,7 +33,7 @@ namespace S0142
                 {
                     foreach (var fileEntity in fileEntities)
                     {
-                        if (fileEntity.RowKey == Constants.FirstReconciliation)
+                        if (fileEntity.RowKey == Constants.FinalInitial)
                         {
                             Pageable<FileListTable> qRes = filesTab.Query<FileListTable>(filter: $"PartitionKey eq '{fileEntity.PartitionKey}' and RowKey eq '{fileEntity.RowKey}'");
 
