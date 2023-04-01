@@ -1,0 +1,49 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "azLocation": {
+            "value": "uksouth"
+        },
+        "projShortName": {
+            "value": "Smoke"
+        },
+        "envType": {
+            "value": "dev"
+        },
+        "projVersion": {
+            "value": "001"
+        },
+        "logRetention": {
+            "value": 30
+        },
+        "dataLakeName": {
+            "value": "nrgdxlake"
+        },
+        "dataLakeRg": {
+            "value": "NrgdxData"
+        },
+        "dataLakeConfigName": {
+            "value": "nrgdxdata002"
+        },
+        "dataLakeContainer": {
+            "value": "bsc"
+        },
+        "dataVaultName": {
+            "value": "NrgdxVault2"
+        },
+        "bmrsApiKeySecretName": {
+            "value": "BmrsApiKey"
+        },
+        "azTags": {
+            "value": {
+                "App": "smoke",
+                "Business": "TMRSM",
+                "IP": "Open Source",
+                "CreatedBy": "Andy Roberts",
+                "Service": "Energy Data",
+                "Region": "GB & NI"
+            }
+        }
+    }
+}
