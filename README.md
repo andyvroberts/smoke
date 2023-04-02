@@ -35,6 +35,15 @@ https://downloads.elexonportal.co.uk/p114/download?key=<API_KEY>&filename=S0142_
 
 <br>
 
+## Montly Costs Tracker
+
+| Month | Data Lake | Function App | Total |
+|:-------------|:--------------|:-------|:------------|
+| 2023-04 |  | | |
+| 2023-03 | (21gb / 3,200 files) £0.26 | n/a  | £0.26 |
+
+<br>
+
 # Design
 ## Acquisition Process
 Create an Azure function that runs on a timer (once per day) which will scan for only one of the settlement run types.  Duplicate the scanner for each of the run types required.  
