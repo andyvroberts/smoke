@@ -22,10 +22,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
-      - name: Build
         run: |
           cd S0142
+          dotnet restore
+      - name: Build
+        run:
           dotnet build --configuration Release --no-restore
       - name: Display dotnet version
         run: dotnet --version
