@@ -11,7 +11,7 @@ namespace S0142
     using S0142.Common;
     using S0142.Models;
     using S0142.Services;
-    // ("0 1 * * *") or ("*/3 * * * *") and
+    // ("0 1 * * *") or ("*/3 * * * *") and and
     public static class ScannerII
     {
         [FunctionName("S0142-II-Scanner")]

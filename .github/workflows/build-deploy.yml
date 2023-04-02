@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: [ '3.1.x', '6.0.x' ]
+        dotnet-version: [ '6.0.x' ]
+        # dotnet-version: [ '3.1.x', '6.0.x' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -21,13 +22,14 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+      - name: change dir
+        run: cd S0142
+      - name: display cwd
+        run: pwd
       - name: Install dependencies
-        run: |
-          cd S0142
-          dotnet restore
+        run: dotnet restore
       - name: Build
-        run:
-          dotnet build --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore
       - name: Display dotnet version
         run: dotnet --version
 
