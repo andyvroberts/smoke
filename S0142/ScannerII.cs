@@ -11,11 +11,11 @@ namespace S0142
     using S0142.Common;
     using S0142.Models;
     using S0142.Services;
-    // ("0 1 * * *") or ("*/3 * * * *")
+
     public static class ScannerII
     {
         [FunctionName("S0142-II-Scanner")]
-        public static async Task Scan([TimerTrigger("*/3 * * * *")] TimerInfo scanTimer,
+        public static async Task Scan([TimerTrigger("0 1 * * *")] TimerInfo scanTimer,
         [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigInterimInitRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
