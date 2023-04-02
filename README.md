@@ -1,6 +1,8 @@
 # Smoke
 Acquisition of energy industry balancing and settlement calculation data, into a data lake
 
+![Build Status](https://github.com/avroberts-azure/smoke/actions/workflows/build-deploy.yml/badge.svg)
+
 # S0142 Data
 This dataset is produced by a BSC (Balancing & Settlement Code) system called the SAA (Settlement Administration Agent) at the end of each settlement run and it contains inputs and outputs for Central Settlement calculations.  The data is available from Elexon via their portal.  You must register and obtain an API key.
 
