@@ -1,5 +1,8 @@
 {
     "version": "2.0",
+    "functions": [
+        "S0142-II-Scanner"
+    ],
     "logging": {
         "applicationInsights": {
             "samplingSettings": {
