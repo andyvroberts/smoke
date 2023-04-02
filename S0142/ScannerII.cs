@@ -11,7 +11,7 @@ namespace S0142
     using S0142.Common;
     using S0142.Models;
     using S0142.Services;
-    // ("0 1 * * *") or ("*/3 * * * *") run at 1am or every 3 mins.
+    // ("0 1 * * *") or ("*/3 * * * *")
     public static class ScannerII
     {
         [FunctionName("S0142-II-Scanner")]
