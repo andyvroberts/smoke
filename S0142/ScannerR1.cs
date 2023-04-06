@@ -15,7 +15,7 @@ namespace S0142
     public static class ScannerR1
     {
         [FunctionName("S0142-R1-Scanner")]
-        public static async Task Scan([TimerTrigger("20 1 * * *")] TimerInfo scanTimer,
+        public static async Task ScanR1([TimerTrigger("20 1,4 * * *", RunOnStartup = true)] TimerInfo scanTimer,
         [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigFirstReconRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
