@@ -21,6 +21,7 @@ namespace S0142
         ILogger log)
         {
             var nextDate = cd.Latest.AddDays(1);
+            // comment
 
             if (nextDate.Date < DateTime.Now.Date)
             {
