@@ -1,4 +1,4 @@
-@description('the parameters from the params.<env>.json file')
+@description('the parameters needed to deploy all Azure resources for the FunctionApp')
 param azLocation string
 param azTags object
 param logRetention int
@@ -30,6 +30,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   tags: azTags
 }
 
+// Specify kind: as 'linux' otherwise it defaults to windows.
 @description('Create the App Service Plan for the Server Farm. sku Y1 is the free tier.')
 resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
   name: hostPlanName
@@ -38,6 +39,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
     name: 'Y1'
     tier: 'Dynamic'
   }
+  kind: 'linux'
   properties: {}
   tags: azTags
 }
@@ -67,11 +69,12 @@ resource dataLakeConfig 'Microsoft.Storage/storageAccounts@2019-06-01' existing 
   name: dataLakeConfigName
 }
 
+// Specify kind: as 'functionapp,linux' to run functions on Linux O/S.
 @description('Create the Function App with references to all other resources')
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: funcName
   location: azLocation
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   identity: {
     type: 'SystemAssigned'
   }
@@ -106,7 +109,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         {
           name: 'EnergyDataConfigStore'
           value: 'DefaultEndpointsProtocol=https;AccountName=${dataLakeConfigName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${dataLakeConfig.listKeys().keys[0].value}'
-          
+
         }
         {
           name: 'BmrsApiKey'

@@ -14,14 +14,13 @@ namespace S0142
 
     public static class ScannerII
     {
-        [FunctionName("S0142-II-Scanner")] 
+        [FunctionName("S0142-II-Scanner")]
         public static async Task ScanII([TimerTrigger("0 1,4 * * *", RunOnStartup = true)] TimerInfo scanTimer,
         [Table("AcquisitionConfig", Constants.ConfigPK, Constants.ConfigInterimInitRK, Connection = "EnergyDataConfigStore")] ConfigTable cd,
         [Table("S0142Files", Connection = "EnergyDataConfigStore")] TableClient filesTab,
         ILogger log)
         {
             var nextDate = cd.Latest.AddDays(1);
-            // comment
 
             if (nextDate.Date < DateTime.Now.Date)
             {

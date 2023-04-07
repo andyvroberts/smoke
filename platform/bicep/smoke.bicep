@@ -4,6 +4,9 @@ targetScope = 'resourceGroup'
 // resource group is only defined when issuing the Azure CLI "az deployment group create" command on build.
 // all resources in this file will inherit the resource group defined by the CLI deployment.
 //
+// Bicep quick start template for Function App:
+// https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.web/app-function
+//
 
 @description('the parameters from the params.<env>.json file')
 param projShortName string
