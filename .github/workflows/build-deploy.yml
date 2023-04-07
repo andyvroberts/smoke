@@ -49,16 +49,16 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v3
 
-    # - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-    #   uses: actions/setup-dotnet@v3
-    #   with:
-    #     dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
     # https://learn.microsoft.com/en-us/azure/azure-functions/functions-how-to-github-actions?tabs=dotnet
-    - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 2.2.402
+    # - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+    #   uses: actions/setup-dotnet@v1
+    #   with:
+    #     dotnet-version: 2.2.402
 
     - name: display package path
       run: echo ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
