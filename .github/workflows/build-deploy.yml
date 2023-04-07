@@ -56,12 +56,12 @@ jobs:
 
     - name: display package path
       run: echo ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
-    - name: debug path
+    - name: display package path contents
       shell: bash
       run: |
         cd ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
         ls -l
-        
+
     - name: 'Resolve Project Dependencies Using Dotnet'
       shell: bash
       run: |
@@ -69,8 +69,6 @@ jobs:
         dotnet build --configuration Release --output ./output
         popd
 
-    # scm-do-build-during-deployment: 'true' (explicit command for creating function apps via github workflow)
-    # enable-oryx-build: 'true' (for linux but i'm trying it anyway)
     - name: 'Run Azure Functions Action'
       uses: Azure/functions-action@v1
       id: fa
@@ -79,4 +77,3 @@ jobs:
         package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/output'
         publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}
         scm-do-build-during-deployment: 'true'
-        #enable-oryx-build: 'true'
