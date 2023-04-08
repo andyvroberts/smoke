@@ -31,16 +31,19 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
 }
 
 // Specify kind: as 'linux' otherwise it defaults to windows.
+// https://learn.microsoft.com/en-us/azure/templates/microsoft.web/serverfarms?pivots=deployment-language-bicep
 @description('Create the App Service Plan for the Server Farm. sku Y1 is the free tier.')
-resource hostingPlan 'Microsoft.Web/serverfarms@2021-03-01' = {
+resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: hostPlanName
   location: azLocation
   sku: {
     name: 'Y1'
     tier: 'Dynamic'
   }
-  kind: 'linux'
-  properties: {}
+  kind: 'linux'               // needed for linux
+  properties: {
+    reserved: true            // needed for linux
+  }
   tags: azTags
 }
 
@@ -74,13 +77,14 @@ resource dataLakeConfig 'Microsoft.Storage/storageAccounts@2019-06-01' existing 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: funcName
   location: azLocation
-  kind: 'functionapp,linux'
+  kind: 'functionapp,linux'                   // needed for linux
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
     serverFarmId: hostingPlan.id
     siteConfig: {
+      linuxFxVersion: 'DOTNET|6.0'            // needed for linux
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
