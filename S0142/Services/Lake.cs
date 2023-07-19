@@ -57,6 +57,7 @@ namespace S0142.Services
             catch (Exception e)
             {
                 log.LogError($"DataLake Client for [File = {fileName}] - [SettDate = {settDate}] had ERROR: {e.Message}");
+                throw;
             }
         }
 
