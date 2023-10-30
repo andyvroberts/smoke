@@ -1,0 +1,49 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "value": "SmokeSynapse3"
+        },
+        "azLocation": {
+            "value": "uksouth"
+        },
+        "synapseName": {
+            "value": "smokesyndev003"
+        },
+        "dataLakeName": {
+            "value": "nrgdxlake"
+        },
+        "dataLakeRgName": {
+            "value": "NrgdxData"
+        },
+        "dataLakeFilesystemName":{
+            "value": "warehouse"
+        },
+        "dataVaultName": {
+            "value": "NrgdxVault2"
+        },
+        "adminUserSecretName": {
+            "value": "SynapseAdminUser"
+        },
+        "adminUserPasswordSecretName": {
+            "value": "SynapseAdminUserPassword"
+        },
+        "dataLakeUrlFormat":{
+            "value": "https://{0}.dfs.core.windows.net"
+        },
+        "ipAddress": {
+            "value": "172.30.140.150"
+        },
+        "azTags": {
+            "value": {
+                "App": "Smoke Data Warehouse",
+                "Business": "TMRSM",
+                "IP": "Open",
+                "CreatedBy": "Andy Roberts",
+                "Service": "EnergyData",
+                "Region": "GB & NI"
+            }
+        }
+    }
+}
