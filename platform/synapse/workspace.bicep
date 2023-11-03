@@ -32,7 +32,7 @@ resource synapse 'Microsoft.Synapse/workspaces@2021-06-01' = {
     type:'SystemAssigned'
   }
 }
-  
+
 // If you specify zero to zero IP range, the name must be "AllowAllWindowsAzureIps".
 resource openAccessFirewallRule 'Microsoft.Synapse/workspaces/firewallRules@2021-06-01' = {
   name: 'AllowAllWindowsAzureIps'
@@ -52,3 +52,5 @@ resource localAccessPoint 'Microsoft.Synapse/workspaces/firewallRules@2021-06-01
     startIpAddress: ipAddress
   }
 }
+
+output synapsePrincipalId string = synapse.identity.principalId

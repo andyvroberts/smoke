@@ -2,42 +2,42 @@
     "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "rgName": {
-            "value": "SmokeSynapse4"
-        },
         "azLocation": {
             "value": "uksouth"
         },
-        "synapseName": {
-            "value": "smokesyndev004"
+        "projShortName": {
+            "value": "Smoke"
+        },
+        "envType": {
+            "value": "dev"
+        },
+        "projVersion": {
+            "value": "003"
+        },
+        "logRetention": {
+            "value": 30
         },
         "dataLakeName": {
             "value": "nrgdxlake"
         },
-        "dataLakeRgName": {
+        "dataLakeRg": {
             "value": "NrgdxData"
         },
-        "dataLakeFilesystemName":{
-            "value": "warehouse"
+        "dataLakeConfigName": {
+            "value": "nrgdxdata002"
+        },
+        "dataLakeContainer": {
+            "value": "bsc"
         },
         "dataVaultName": {
             "value": "NrgdxVault2"
         },
-        "adminUserSecretName": {
-            "value": "SynapseAdminUser"
-        },
-        "adminUserPasswordSecretName": {
-            "value": "SynapseAdminUserPassword"
-        },
-        "dataLakeUrlFormat":{
-            "value": "https://{0}.dfs.core.windows.net"
-        },
-        "ipAddress": {
-            "value": "172.30.140.150"
+        "bmrsApiKeySecretName": {
+            "value": "BmrsApiKey"
         },
         "azTags": {
             "value": {
-                "App": "Smoke Data Warehouse",
+                "App": "Smoke",
                 "Business": "TMRSM",
                 "IP": "Open",
                 "CreatedBy": "Andy Roberts",

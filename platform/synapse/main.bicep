@@ -45,5 +45,15 @@ module synapse 'workspace.bicep' = {
     rgName: rgName
     ipAddress: ipAddress
   }
-  
+}
+
+// assign the data lake blob contributor role to the synapse workspace identity
+module adlsBlobRole 'role-assign-adls.bicep' = {
+  name: 'adlsBlobRoleModule'
+  scope: resourceGroup(dataLakeRgName)
+  params: {
+    principalId: synapse.outputs.synapsePrincipalId
+    synapseName: synapseName
+    adlsName: dataLakeName
+  }
 }
