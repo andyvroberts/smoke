@@ -17,8 +17,11 @@
         "dataLakeRgName": {
             "value": "NrgdxData"
         },
-        "dataLakeFilesystemName":{
+        "warehouseContainerName":{
             "value": "warehouse"
+        },
+        "bscContainerName":{
+            "value": "bsc"
         },
         "dataVaultName": {
             "value": "NrgdxVault2"

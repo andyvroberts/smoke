@@ -13,8 +13,9 @@ param rgName string
 param azLocation string
 param dataLakeUrlFormat string
 param dataLakeName string
-param dataLakeFilesystemName string
 param dataLakeRgName string
+param warehouseContainerName string
+param bscContainerName string
 param dataVaultName string
 param adminUserSecretName string
 param adminUserPasswordSecretName string
@@ -39,7 +40,7 @@ module synapse 'workspace.bicep' = {
     azLocation: azLocation
     dataLakeUrlFormat: dataLakeUrlFormat
     dataLakeName: dataLakeName
-    dataLakeFilesystemName: dataLakeFilesystemName
+    dataLakeFilesystemName: warehouseContainerName
     synapseAdminUser: lakeVault.getSecret(adminUserSecretName)
     synapseAdminUserPassword: lakeVault.getSecret(adminUserPasswordSecretName)
     rgName: rgName
@@ -47,7 +48,7 @@ module synapse 'workspace.bicep' = {
   }
 }
 
-// assign the data lake blob contributor role to the synapse workspace identity
+// assign data lake rbac roles to the synapse workspace identity
 module adlsBlobRole 'role-assign-adls.bicep' = {
   name: 'adlsBlobRoleModule'
   scope: resourceGroup(dataLakeRgName)
@@ -55,5 +56,7 @@ module adlsBlobRole 'role-assign-adls.bicep' = {
     principalId: synapse.outputs.synapsePrincipalId
     synapseName: synapseName
     adlsName: dataLakeName
+    warehouseContainerName: warehouseContainerName
+    bscContainerName: bscContainerName
   }
 }
