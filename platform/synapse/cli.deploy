@@ -1,2 +1,0 @@
-paramFile=params.dev.json
-az deployment sub create --location uksouth --template-file main.bicep --parameters $paramFile
