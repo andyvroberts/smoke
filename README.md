@@ -39,6 +39,7 @@ https://downloads.elexonportal.co.uk/p114/download?key=<API_KEY>&filename=S0142_
 
 | Month | Data Lake (Tot size) | Function App | Total |
 |:-------------|:--------------|:-------|:------------|
+| 2023-11 | (36gb / 5,190 files) £0.71 | £0.19 | £0.90 |
 | 2023-10 | (34gb / 4,920 files) £0.66 | £0.19 | £0.86 |
 | 2023-09 | (32gb / 4,680 files) £0.60 | £0.18 | £0.78 |
 | 2023-08 | (30gb / 4,400 files) £0.56 | £0.18 | £0.74 |
