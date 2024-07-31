@@ -1,6 +1,6 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
+    "contentVersion": "2.0.0.0",
     "parameters": {
         "azLocation": {
             "value": "uksouth"
@@ -12,7 +12,7 @@
             "value": "dev"
         },
         "projVersion": {
-            "value": "003"
+            "value": "004"
         },
         "logRetention": {
             "value": 30

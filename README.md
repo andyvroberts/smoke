@@ -75,31 +75,4 @@ Where:
 2. File system organised by data source and month = /saa/year/month
 3. Files are the original (unaltered) downloaded files from Elexon
 
-<br>
 
-# Tech Start
-Configure an Azure storage account with Hierarchical Namespaces and a minimum durability/availability of ZRS. 
-
-## Function App Creation
-Create a c# dotnet function app.  
-https://learn.microsoft.com/en-us/azure/azure-functions/create-first-function-cli-csharp?tabs=azure-cli%2Cin-process
-
-```
-func init S0142 --dotnet
-cd S0142
-func new --name ScannerR1 --template "timer trigger" --authlevel "function"
-```
-
-Add the csproj references needed for Azure storage types  
-```
-dotnet add package Microsoft.Azure.WebJobs.Extensions.Tables --prerelease  
-dotnet add package Microsoft.Azure.WebJobs.Extensions.Storage
-dotnet add package Azure.Storage.Files.DataLake
-```
-
-To restrict locally running functions during testing, add this clause to the "host.json" file to include only those functions you wish to execute:  
-```
-{
-    "functions": [ "funcname1", "funcname2" ]
-}
-```
