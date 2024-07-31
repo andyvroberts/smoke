@@ -8,9 +8,9 @@ on:
     - 'SAA/S0142/**'
 
 env:
-  AZURE_FUNCTIONAPP_NAME: 'SmokeFunc004'        # set this to your function app name on Azure
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './SAA/S0142'     # set this to the path to your function app project, defaults to the repository root
-  DOTNET_VERSION: '8.0.x'                       # set this to the dotnet version to use (e.g. '2.1.x', '3.1.x', '5.0.x')
+  AZURE_FUNCTIONAPP_NAME: 'SmokeFunc005'          # set this to your function app name on Azure
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './SAA/S0142'   # set this to the path to your function app project, defaults to the repository root
+  DOTNET_VERSION: '8.0.x'                         # set this to the dotnet version to use (e.g. '2.1.x', '3.1.x', '5.0.x')
 
 jobs:
   # 1. BUILD
@@ -27,7 +27,7 @@ jobs:
         # dotnet-version: [ '3.1.x', '6.0.x' ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
@@ -47,7 +47,7 @@ jobs:
     environment: dev
     steps:
     - name: 'Checkout GitHub Action'
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
       uses: actions/setup-dotnet@v3
