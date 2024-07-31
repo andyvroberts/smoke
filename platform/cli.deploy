@@ -1,2 +1,1 @@
-paramFile=params.dev.json
-az deployment group create --resource-group Smoke004 --template-file bicep/smoke.bicep --parameters $paramFile
+az deployment group create --resource-group Smoke005 --template-file smoke.bicep --parameters params.dev.json

@@ -12,7 +12,7 @@
             "value": "dev"
         },
         "projVersion": {
-            "value": "004"
+            "value": "005"
         },
         "logRetention": {
             "value": 30
@@ -39,7 +39,6 @@
             "value": {
                 "App": "Smoke",
                 "Business": "TMRSM",
-                "IP": "Open",
                 "CreatedBy": "Andy Roberts",
                 "Service": "EnergyData",
                 "Region": "GB & NI"

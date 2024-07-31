@@ -13,7 +13,7 @@ param insightsName string
 param funcName string
 
 @secure()
-param bmrsApiKey string
+param elexonApiKey string
 
 @description('create the Function App storage account')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2019-06-01' = {
@@ -40,10 +40,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
     name: 'Y1'
     tier: 'Dynamic'
   }
-  kind: 'linux'               // needed for linux
-  properties: {
-    reserved: true            // needed for linux
-  }
+  properties: {}
   tags: azTags
 }
 
@@ -77,14 +74,13 @@ resource dataLakeConfig 'Microsoft.Storage/storageAccounts@2019-06-01' existing 
 resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
   name: funcName
   location: azLocation
-  kind: 'functionapp,linux'                   // needed for linux
+  kind: 'functionapp'
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
     serverFarmId: hostingPlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET|6.0'            // needed for linux
       appSettings: [
         {
           name: 'AzureWebJobsStorage'
@@ -95,16 +91,20 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${storageAccount.listKeys().keys[0].value}'
         }
         {
+          name: 'WEBSITE_CONTENTSHARE'
+          value: toLower(funcName)
+        }
+        {
           name: 'FUNCTIONS_EXTENSION_VERSION'
           value: '~4'
         }
         {
-          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
           value: applicationInsights.properties.InstrumentationKey
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'dotnet'
+          value: 'dotnet-isolated'
         }
         {
           name: 'EnergyDataLake'
@@ -113,11 +113,10 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         {
           name: 'EnergyDataConfigStore'
           value: 'DefaultEndpointsProtocol=https;AccountName=${dataLakeConfigName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${dataLakeConfig.listKeys().keys[0].value}'
-
         }
         {
-          name: 'BmrsApiKey'
-          value: bmrsApiKey
+          name: 'elexonApiKey'
+          value: elexonApiKey
         }
         {
           name: 'Container'

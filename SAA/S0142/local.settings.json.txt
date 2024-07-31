@@ -1,7 +1,7 @@
 {
     "IsEncrypted": false,
     "Values": {
-        "AzureWebJobsStorage": "Config store",
+        "AzureWebJobsStorage": "function app storage account",
         "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
         "ElexonApiKey": "",
         "Container": "bsc",

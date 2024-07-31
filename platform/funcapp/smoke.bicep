@@ -1,6 +1,6 @@
 targetScope = 'resourceGroup'
 //
-// resource group name = Smoke001
+// resource group name = Smoke005
 // resource group is only defined when issuing the Azure CLI "az deployment group create" command on build.
 // all resources in this file will inherit the resource group defined by the CLI deployment.
 //
@@ -56,6 +56,6 @@ module functionApp 'main.bicep' = {
     hostPlanName: hostPlanName
     insightsName: insightsName
     funcName: funcName
-    bmrsApiKey: lakeVault.getSecret(bmrsApiKeySecretName)
+    elexonApiKey: lakeVault.getSecret(bmrsApiKeySecretName)
   }
 }
