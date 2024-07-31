@@ -100,7 +100,7 @@ resource functionApp 'Microsoft.Web/sites@2021-03-01' = {
         }
         {
           name: 'APPLICATIONINSIGHTS_CONNECTION_STRING'
-          value: applicationInsights.properties.InstrumentationKey
+          value: applicationInsights.properties.ConnectionString
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
