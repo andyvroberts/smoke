@@ -17,6 +17,12 @@
         "logRetention": {
             "value": 30
         },
+        "dailyQuota": {
+            "value": 1
+        },
+        "workspaceSku": {
+            "value": "PerGB2018"
+        },  
         "dataLakeName": {
             "value": "nrgdxlake"
         },

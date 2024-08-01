@@ -1,0 +1,1 @@
+az deployment group create --resource-group Smoke005 --template-file main.bicep --parameters params.dev.json
