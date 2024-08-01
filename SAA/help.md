@@ -19,7 +19,7 @@ dotnet add package Azure.Storage.Files.DataLake --version 12.19.1
 ```
 
 ## Azure
-Changed login method.  
+Changed CLI login method as they no longer support automatic browser redirect.  
 ```
 az login --use-device-code
 ```
