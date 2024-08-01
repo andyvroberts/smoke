@@ -1,6 +1,6 @@
 {
     "functions": [
-        "ScannerDF", "ScannerRF", "ScannerII", "ScannerDF"
+        "ScannerDF", "ScannerRF"
     ],
     "version": "2.0",
     "logging": {
