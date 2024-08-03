@@ -13,7 +13,7 @@ namespace S0142
     {
         [Function("ScannerII")]
         public static async Task Run(
-            [TimerTrigger("10 */6 * * *")] TimerInfo scanTimer,
+            [TimerTrigger("0 10 */6 * * *")] TimerInfo scanTimer,
             FunctionContext context)
         {
             var _logger = context.GetLogger(nameof(ScannerII));

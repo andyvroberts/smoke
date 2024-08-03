@@ -13,7 +13,7 @@ namespace S0142
     {
         [Function("ScannerDF")]
         public static async Task Run(
-            [TimerTrigger("0 */6 * * *")] TimerInfo scanTimer,
+            [TimerTrigger("0 0 */6 * * *")] TimerInfo scanTimer,
             FunctionContext context)
         {
             var _logger = context.GetLogger(nameof(ScannerDF));
