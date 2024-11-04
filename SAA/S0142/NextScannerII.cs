@@ -18,7 +18,7 @@ namespace S0142
         {
             var _logger = context.GetLogger(nameof(NextScannerII));
 
-            var configTab = GetConfigTableClient("EnergyDataConfigStore");
+            var configTab = GetConfigTableClient("S0142Files");
             var confRow = configTab.GetEntity<ConfigTable>(Constants.ConfigPK, Constants.ConfigInterimInitRK).Value;
             confRow.Latest = confRow.Latest.AddDays(1);
 
