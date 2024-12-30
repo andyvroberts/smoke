@@ -77,7 +77,7 @@ namespace S0142
             }
             else
             {
-                _logger.LogWarning("No Execution - run date [{nextDate}] is greater than or equal to [2018-01-01]", nextDate);
+                _logger.LogWarning("No Execution - run date [{nextDate}] is greater than or equal to today [{DateTime.Now.Date}]", nextDate, DateTime.Now.Date);
             }
         }
 
